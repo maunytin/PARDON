@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Correction - Devoirs d'allemand</title>
+<style>
+  :root {
+    --bg: #fdf6f0;
+    --card-bg: #ffffff;
+    --text: #2b2b2b;
+    --accent: #d6336c;
+    --accent-2: #f06595;
+    --border: #eaeaea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a1420;
+      --card-bg: #241b2c;
+      --text: #f2e9f0;
+      --accent: #ff6fa5;
+      --accent-2: #ff9ec4;
+      --border: #3a2f42;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a1420;
+    --card-bg: #241b2c;
+    --text: #f2e9f0;
+    --accent: #ff6fa5;
+    --accent-2: #ff9ec4;
+    --border: #3a2f42;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Verdana, Arial, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+    padding: 40px 16px 80px;
+  }
+
+  /* fond d'émojis tristes */
+  .sad-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    opacity: 0.12;
+    pointer-events: none;
+    font-size: 28px;
+    line-height: 60px;
+    user-select: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    text-align: center;
+    opacity: 0.7;
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 0.95em;
+  }
+
+  .reveal-actions {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  #revealBtn {
+    background: var(--accent-2);
+    color: white;
+    font-size: 1em;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  #answers {
+    animation: popIn 0.4s ease;
+  }
+
+  ol {
+    padding-left: 22px;
+  }
+  li {
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .phrase {
+    font-weight: 600;
+  }
+  .pronom {
+    color: var(--accent-2);
+    font-style: italic;
+  }
+
+  .actions {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  button {
+    font-size: 1em;
+    padding: 14px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  button:active { transform: scale(0.97); }
+
+  #sorryBtn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    box-shadow: 0 6px 18px rgba(214, 51, 108, 0.4);
+  }
+  #sorryBtn:hover { box-shadow: 0 8px 22px rgba(214, 51, 108, 0.55); }
+
+  #closeBtn {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  #message {
+    display: none;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 1.15em;
+    color: var(--accent);
+    font-weight: 700;
+    animation: popIn 0.4s ease;
+  }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* coeurs qui tombent et rebondissent */
+  .heart {
+    position: fixed;
+    top: -40px;
+    font-size: 22px;
+    z-index: 1;
+    pointer-events: none;
+    animation-name: fall, bounce;
+    animation-timing-function: linear, ease-out;
+    animation-iteration-count: 1, infinite;
+  }
+  @keyframes fall {
+    to { top: 78vh; }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="sad-bg" id="sadBg"></div>
+
+<div class="container">
+  <h1>Übung — Correction</h1>
+  <p class="subtitle">Pronom + verbe + nom, à l'accusatif ou au datif</p>
+
+  <div class="reveal-actions">
+    <button id="revealBtn">👀 Afficher les réponses</button>
+  </div>
+
+  <ol id="answers" style="display:none;">
+    <li>
+      <div class="phrase">Ich träume von der Reise nach Berlin.</div>
+      <div class="pronom">→ Ich träume von ihr.</div>
+    </li>
+    <li>
+      <div class="phrase">Sie denkt an das Diplom.</div>
+      <div class="pronom">→ Sie denkt an es.</div>
+    </li>
+    <li>
+      <div class="phrase">Wir denken an die Zukunft.</div>
+      <div class="pronom">→ Wir denken an sie.</div>
+    </li>
+    <li>
+      <div class="phrase">Er träumt von der Liebe.</div>
+      <div class="pronom">→ Er träumt von ihr.</div>
+    </li>
+    <li>
+      <div class="phrase">Sie träumen von dem besseren Leben.</div>
+      <div class="pronom">→ Sie träumen von ihm.</div>
+    </li>
+    <li>
+      <div class="phrase">Ich träume von dem Reichtum.</div>
+      <div class="pronom">→ Ich träume von ihm.</div>
+    </li>
+    <li>
+      <div class="phrase">Träumst du von dem Strand?</div>
+      <div class="pronom">→ Träumst du von ihm?</div>
+    </li>
+    <li>
+      <div class="phrase">Denkt ihr an die Hausaufgaben?</div>
+      <div class="pronom">→ Denkt ihr an sie?</div>
+    </li>
+  </ol>
+
+  <div class="actions">
+    <button id="sorryBtn">💔 Pour me faire pardonner d'avoir mal fait tes devoirs, je t'aime</button>
+    <button id="closeBtn">Fermer</button>
+    <div id="message">Pardon pour les fautes... mais pas pour les sentiments 💕</div>
+  </div>
+</div>
+
+<script>
+  // fond d'émojis tristes
+  const sadEmojis = ["😢","😭","🥺","😔","💧"];
+  const bg = document.getElementById("sadBg");
+  const cellCount = 200;
+  for (let i = 0; i < cellCount; i++) {
+    const span = document.createElement("span");
+    span.textContent = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+    bg.appendChild(span);
+  }
+
+  // coeurs animés qui tombent et rebondissent
+  const hearts = ["❤️","💖","💕","💗","💘"];
+  function spawnHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+    heart.style.left = Math.random() * 100 + "vw";
+    const fallDuration = 4 + Math.random() * 3;
+    heart.style.animationDuration = fallDuration + "s, 0.6s";
+    heart.style.animationDelay = "0s, " + fallDuration + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), (fallDuration + 6) * 1000);
+  }
+  setInterval(spawnHeart, 400);
+  for (let i = 0; i < 8; i++) setTimeout(spawnHeart, i * 150);
+
+  document.getElementById("revealBtn").addEventListener("click", () => {
+    const answers = document.getElementById("answers");
+    const btn = document.getElementById("revealBtn");
+    const hidden = answers.style.display === "none";
+    answers.style.display = hidden ? "block" : "none";
+    btn.textContent = hidden ? "🙈 Cacher les réponses" : "👀 Afficher les réponses";
+  });
+
+  document.getElementById("sorryBtn").addEventListener("click", () => {
+    document.getElementById("message").style.display = "block";
+  });
+  document.getElementById("closeBtn").addEventListener("click", () => {
+    document.getElementById("message").style.display = "none";
+  });
+</script>
+
+</body>
+</html>
